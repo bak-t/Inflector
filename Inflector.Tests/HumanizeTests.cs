@@ -6,22 +6,22 @@ namespace Inflector.Tests
     public class HumanizeTests : InflectorTestBase
     {
         [Test]
-        public void Humanize()
+        [TestCase("some_title", "Some title")]
+        [TestCase("some-title", "Some-title")]
+        [TestCase("Some_title", "Some title")]
+        [TestCase("someTitle", "Sometitle")]
+        [TestCase("someTitle_Another", "Sometitle another")]
+        [TestCase("HistoricalUsageData", "Historical Usage Data")]
+        [TestCase("LBMPZone", "LBMP Zone")]
+        [TestCase("LBMP", "LBMP")]
+        [TestCase("Historical", "Historical")]
+        [TestCase("Bill2StartDate", "Bill 2 Start Date")]
+        [TestCase("Bill234StartDate", "Bill 234 Start Date")]
+        [TestCase("FifteenThousandsKWHOrLessAnnually", "Fifteen Thousands KWH Or Less Annually")]
+        [TestCase("_7x24", "7x24")]
+        public void Humanize(string input, string expectedResult)
         {
-            foreach (var pair in TestData)
-            {
-                Assert.AreEqual(pair.Key.Humanize(), pair.Value);
-            }
-        }
-
-        public HumanizeTests()
-        {
-            //Capitalizes the first word, lowercases the rest and turns underscores into spaces
-            TestData.Add("some_title", "Some title");
-            TestData.Add("some-title", "Some-title");
-            TestData.Add("Some_title", "Some title");
-            TestData.Add("someTitle", "Sometitle");
-            TestData.Add("someTitle_Another", "Sometitle another");
+            Assert.That(input.Humanize(), Is.EqualTo(expectedResult));
         }
     }
 }
